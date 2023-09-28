@@ -1,0 +1,95 @@
+.movie {
+    background-color: #222222;
+    height: 218px;
+    max-width: 270px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0px 16px 24px 0px #0000000D;
+}
+
+.movie__image {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    height: 151px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.movie__description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 14px 12px 0px 12px;
+}
+
+.movie__description_text {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.movie__description_button {
+    width: 16px;
+    height: 16px;
+    bottom: 37px;
+    right: 12px;
+    object-position: 100% 100%;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    background-color: transparent;
+    background-color: #313131;
+    cursor: pointer;
+
+}
+
+.movie__description_button_save-list {
+    background: url('../../images/icon__delite.png');
+    background-size: 10px;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+    border: none;
+    background-repeat: no-repeat;
+}
+
+.movie__description_button_save {
+    background: #2BE080;
+}
+
+.movie__duration {
+    margin: 0;
+    color: #8B8B8B;
+    font-family: Inter;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 13px;
+    letter-spacing: 0px;
+    padding-left: 12px;
+    padding-top: 10px;
+}
+
+@media screen and (max-width: 980px) {
+    .movie {
+        height: 257px;
+        max-width: 339px;
+    }
+
+    .movie__image {
+        height: 190px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .movie {
+        height: 235px;
+    }
+
+    .movie__image {
+        height: 168px;
+    }
+}

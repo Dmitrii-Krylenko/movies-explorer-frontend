@@ -1,0 +1,105 @@
+.burger {
+    height: 100%;
+    z-index: 1;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+    box-shadow: 0px 0px 53px 0px #000000;
+    background-color: #202020;
+    width: 520px;
+    visibility: hidden;
+}
+
+.burger__button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 130px;
+}
+
+.burger_oppened {
+    visibility: visible;
+}
+
+.burger__button_link {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: 0em;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding-top: 28px;
+}
+
+.burger__button_link-profile {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.burger__button_image {
+    width: 26px;
+    height: 26px;
+    border-radius: 50px;
+    background-color: #313131;
+    background-image: url('../../images/icon__COLOR_icon-main.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 7px;
+}
+
+.burger__button_image_blue {
+    background-color: #0F4157;
+}
+
+.burger__button_profile {
+    padding-top: 621px;
+    display: flex;
+    width: 212px;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger__close {
+    background: url('../../images/Close_Icon.svg');
+    top: 22.5px;
+    right: 22.5px;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    background-size: cover;
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: transparent;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.burger__close :hover,
+.burger__button_link :hover,
+.burger__button_image:hover {
+    opacity: 0.6;
+    transition: 0.5s;
+    border-bottom: #FFFFFF;
+}
+
+@media screen and (max-width: 520px) {
+
+    .burger {
+        width: 100%;
+    }
+
+
+    .burger__button_profile {
+        padding-top: 439px;
+    }
+
+    .burger__button {
+        padding-top: 116px;
+    }
+}

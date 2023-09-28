@@ -1,0 +1,169 @@
+.header {
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.header_blue {
+    background-color: #073042;
+}
+
+.header__logo {
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    /* background-image: url('../../images/icon__COLOR_icon-main.png');
+    background-position: center;
+    background-repeat: no-repeat; */
+}
+
+.header__burger {
+    background: none;
+    border: none;
+    background-image: url('../../images/icon_burger.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: none;
+    padding: 0;
+}
+
+.header__burger:hover {
+    opacity: 0.6;
+    transition: 0.5s;
+}
+
+.header__button_registry {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0px;
+    padding: 0;
+    color: #FFFFFF;
+    background-color: #073042;
+    border: none;
+}
+
+.header__button_entry {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0px;
+    padding: 0;
+    background-color: #3DDC84;
+    width: 76px;
+    height: 32px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 30px;
+    font-family: Inter;
+}
+
+.header__block {
+    display: flex;
+    justify-content: space-between;
+    height: 74px;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.header__block_login {
+    display: flex;
+    justify-content: space-between;
+    height: 74px;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.header__button_link {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.header__button_link:hover {
+    opacity: 0.6;
+    transition: 0.5s;
+}
+
+.header__button_film {
+    display: flex;
+    width: 212px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__button_image {
+    width: 26px;
+    height: 26px;
+    border-radius: 50px;
+    background-color: #313131;
+    background-image: url('../../images/icon__COLOR_icon-main.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 7px;
+}
+
+.header__button_image_blue {
+    background-color: #0F4157;
+}
+
+.header__button_profile {
+    display: flex;
+    width: 212px;
+    justify-content: flex-end;
+    align-items: center
+}
+
+.header__logo_bpx {
+    width: 212px;
+}
+
+@media screen and (max-width: 800px) {
+
+    .header {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .header__button_entry {
+        width: 76px;
+        height: 32px;
+    }
+
+    .header__burger {
+        display: block;
+    }
+
+    .header__button_film {
+        display: none;
+    }
+
+    .header__button_profile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 430px) {
+
+    .header {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .header__button_entry {
+        font-size: 10px;
+        width: 54px;
+        height: 26px;
+        margin-left: 14px;
+    }
+
+    .header__button_registry {
+        font-size: 10px;
+    }
+}
