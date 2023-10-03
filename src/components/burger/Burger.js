@@ -10,15 +10,16 @@ function Burger({ isOpenBurger, closeBurger }) {
   return (
     <section className={`burger ${isOpenBurger && 'burger_oppened'}`}>
       <button className='burger__close' onClick={closeBurger}></button>
-      <div className='burger__button'>
-        <Link className='burger__button_link' to="/">Главная</Link>
-        <Link className='burger__button_link' to="/movies">Фильмы</Link>
-        <Link className='burger__button_link' to="/saved-movies">Сохраненные фильмы</Link>
+      <div className='burger__button burger-button'>
+        <Link className='burger-button__link' to="/">Главная</Link>
+        <Link className='burger-button__link' to="/movies">Фильмы</Link>
+        <Link className='burger-button__link' to="/saved-movies">Сохраненные фильмы</Link>
 
 
-        <div className='burger__button_profile'>
-          <Link className='burger__button_link-profile' to="/profile">Аккаунт</Link>
-          <Link className={`burger__button_image ${location.pathname === '/' ? 'burger__button_image_blue' : ''}`} to="/saved-movies"></Link>
+        <div className='burger__button-profile'>
+          <Link className='burger-button__link-profile' to="/profile">Аккаунт</Link>
+          {/* <Link className={`burger-button__image ${location.pathname === '/' ? 'bburger-button__image_blue' : ''}`} to="/saved-movies"></Link> */}
+          <Link className='burger-button__image' to="/saved-movies" ></Link>
 
         </div>
       </div>

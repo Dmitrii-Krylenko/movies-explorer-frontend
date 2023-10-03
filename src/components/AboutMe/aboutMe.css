@@ -10,9 +10,10 @@
     grid-template-rows: minmax(200px, 327px);
     justify-content: space-between;
     padding-top: 66px;
+    column-gap: 20px;
 }
 
-.studient__about_photo {
+.studient__photo {
     background-image: url('../../images/pp.jpg');
     object-fit: contain;
     background-size: cover;
@@ -32,7 +33,7 @@
     border-bottom: 1px solid #DADADA;
 }
 
-.studient__text-block_description {
+.studient-text__description {
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -43,7 +44,7 @@
     margin: 0;
 }
 
-.studient__text-block_title {
+.studient-text__title {
     font-size: 50px;
     font-weight: 400;
     line-height: 58px;
@@ -52,7 +53,7 @@
     margin: 0;
 }
 
-.studient__text-block_subtitle {
+.studient-text__subtitle {
     font-size: 18px;
     font-weight: 500;
     line-height: 20px;
@@ -62,7 +63,7 @@
     margin: 0;
 }
 
-.studient__text-block_button {
+.studient-text__button {
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
@@ -85,24 +86,24 @@
 
     }
 
-    .studient__text-block_title {
+    .studient-text__title {
         font-size: 40px;
         line-height: 40px;
     }
 
-    .studient__text-block_subtitle {
+    .studient-text__subtitle {
         font-size: 12px;
         line-height: 18px;
     }
 
-    .studient__text-block_description {
+    .studient-text__description {
         padding-top: 20px;
         font-size: 12px;
         line-height: 18px;
         text-align: left;
     }
 
-    .studient__text-block_button {
+    .studient-text__button {
         padding-top: 87px;
     }
 }
@@ -113,10 +114,11 @@
         grid-template-columns: minmax(200px, 320px);
         grid-template-rows: minmax(200px, 352px);
         justify-items: center;
-        justify-content: center
+        justify-content: center;
+        row-gap: 10px;
     }
 
-    .studient__about_photo {
+    .studient__photo {
         width: 352px;
         grid-row: 1;
     }
@@ -135,7 +137,7 @@
         padding-top: 60px;
     }
 
-    .studient__about_photo {
+    .studient__photo {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -148,24 +150,24 @@
         padding-bottom: 28px;
     }
 
-    .studient__text-block_title {
+    .studient-text__title {
         padding-top: 40px;
         font-size: 30px;
         line-height: 36px;
     }
 
-    .studient__text-block_subtitle {
+    .studient-text__subtitle {
         font-size: 11px;
         line-height: 16px;
         padding-top: 20px;
     }
 
-    .studient__text-block_description {
+    .studient-text__description {
         font-size: 11px;
         line-height: 16px;
     }
 
-    .studient__text-block_button {
+    .studient-text__button {
         padding-top: 40px;
     }
 }

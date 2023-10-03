@@ -4,7 +4,7 @@
     align-items: center;
 }
 
-.login {
+.authorization__login {
     padding-top: 70px;
     padding-left: 0;
     margin: 0;
@@ -24,7 +24,7 @@
     padding-bottom: 17px;
 }
 
-.login__bock-input_title {
+.bock-input__title {
     font-size: 10px;
     font-weight: 400;
     line-height: 12px;
@@ -35,7 +35,7 @@
     padding-bottom: 10px;
 }
 
-.login__bock-input_input {
+.bock-input__input {
     background-color: #2F2F2F;
     height: 46px;
     width: 396px;
@@ -46,9 +46,10 @@
     line-height: 16px;
     letter-spacing: 0em;
     color: #FFFFFF;
+    padding-left: 15px;
 }
 
-.login__button {
+.authorization__button {
     border-radius: 3px;
     background-color: #4285F4;
     color: #FFFFFF;
@@ -63,7 +64,7 @@
     margin-top: 179px;
 }
 
-.login__button_register {
+.authorization__button_register {
     margin-top: 87px;
 }
 
@@ -74,7 +75,7 @@
     justify-content: center;
 }
 
-.authorization__links_white {
+.links__white {
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -84,7 +85,7 @@
     text-decoration: none;
 }
 
-.authorization__links_blue {
+.links__blue {
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -93,8 +94,8 @@
     text-decoration: none;
 }
 
-.authorization__links_blue:hover,
-.authorization__links_white:hover,
+.links__blue:hover,
+.links__white:hover,
 .login__button:hover {
     opacity: 0.6;
     transition: 0.5s;
@@ -102,7 +103,7 @@
 
 @media screen and (max-width: 768px) {
 
-    .login {
+    .authorization__login {
         padding-top: 232px;
     }
 
@@ -113,16 +114,16 @@
 
 @media screen and (max-width: 420px) {
 
-    .login {
+    .authorization__login {
         justify-items: center;
         padding-top: 57px;
     }
 
-    .login__bock-input_input {
+    .bock-input__input {
         width: 260px;
     }
 
-    .login__button {
+    .authorization__button {
         width: 260px;
     }
 
@@ -135,22 +136,22 @@
         margin-top: 177px;
     }
 
-    .login__button {
+    .authorization__button {
         font-size: 12px;
         line-height: 15px;
     }
 
-    .authorization__links_white {
+    .links__white {
         font-size: 12px;
         line-height: 15px;
     }
 
-    .authorization__links_blue {
+    .links__blue {
         font-size: 12px;
         line-height: 15px;
     }
 
-    .login__button {
+    .authorization__button {
         margin-top: 267px;
     }
 }

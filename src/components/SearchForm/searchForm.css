@@ -103,7 +103,7 @@
     display: inline-block;
 }
 
-.search__button-short_input {
+.button-short__input {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -122,7 +122,7 @@
     margin: 0;
 }
 
-.search__button-short_span {
+.button-short__span {
     display: inline-block;
     align-items: center;
     position: relative;
@@ -134,7 +134,7 @@
     color: #FFFFFF;
 }
 
-.search__button-short_span::before {
+.button-short__span::before {
     display: block;
     content: "";
     position: absolute;
@@ -147,7 +147,7 @@
     transition: background-color .5s;
 }
 
-.search__button-short_span::after {
+.button-short__span::after {
     display: block;
     content: "";
     position: absolute;
@@ -160,11 +160,11 @@
     transition: background-color .5s, left .5s;
 }
 
-.search__button-short_input:checked+.search__button-short_span::before {
+.button-short__input:checked+.button-short__span::before {
     background-color: #3DDC84;
 }
 
-.search__button-short_input:checked+.search__button-short_span::after {
+.button-short__input:checked+.button-short__span::after {
     background-color: #FFFFFF;
     left: 18px;
 }
@@ -193,18 +193,18 @@
         margin-top: -4px;
     }
 
-    .search__button-short_span {
+    .button-short__span {
         padding-right: 16px;
         padding-left: 0;
         line-height: 18px;
     }
 
-    .search__button-short_span::before {
+    .button-short__span::before {
         right: 0;
         transform: translateX(123px);
     }
 
-    .search__button-short_span::after {
+    .button-short__span::after {
         right: 5px;
         transform: translateX(123px);
         transition: background-color .3s, right .3s;

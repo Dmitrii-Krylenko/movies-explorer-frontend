@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 
 function Movies({ movies, handleSave, isSave, width }) {
     return (
-        <div>
+        <section>
             <>
                 <SearchForm />
                 <MoviesCardList
@@ -13,7 +13,7 @@ function Movies({ movies, handleSave, isSave, width }) {
                     handleSave={handleSave}
                     movies={movies} />
             </>
-        </div>
+        </section>
 
     );
 }
