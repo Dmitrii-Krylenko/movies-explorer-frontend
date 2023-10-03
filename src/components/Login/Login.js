@@ -8,24 +8,28 @@ function Login() {
 
   return (
     <section className='authorization'>
-      <ul className='login'>
-        <li className='login__logo'>
-          <img className="header__logo" src={Logo} alt="логотип" />
-        </li>
-        <li className='login__title'>Рады видеть!</li>
-        <li className='login__bock-input'>
-          <p className='login__bock-input_title'>E-mail</p>
-          <input type='Email' className='login__bock-input_input' placeholder='qqq@qaa.ru'></input>
-        </li>
-        <li className='login__bock-input'>
-          <p className='login__bock-input_title'>Пароль</p>
-          <input className='login__bock-input_input' ></input>
-        </li>
-      </ul>
-      <button className='login__button' type='button'>Войти</button>
-      <div className='authorization__links'>
-        <Link className='authorization__links_white' to="/signup">Ещё не зарегистрированы?</Link>
-        <Link className='authorization__links_blue' to="/signup">Регистрация</Link>
+      <form>
+        <ul className='authorization__login login'>
+          <li className='login__header'>
+            <a href='/'>
+              <img className="logo" src={Logo} alt="логотип" />
+            </a>
+          </li>
+          <li className='login__title'>Рады видеть!</li>
+          <li className='login__bock-input bock-input'>
+            <p className='bock-input__title'>E-mail</p>
+            <input type='Email' className='bock-input__input' placeholder='qqq@qaa.ru' required />
+          </li>
+          <li className='login__bock-input bock-input'>
+            <p className='bock-input__title'>Пароль</p>
+            <input className='bock-input__input' placeholder='********' required />
+          </li>
+        </ul>
+      </form>
+      <button className='authorization__button' type='button'>Войти</button>
+      <div className='authorization__links links'>
+        <Link className='links__white' to="/signup">Ещё не зарегистрированы?</Link>
+        <Link className='links__blue' to="/signup">Регистрация</Link>
       </div>
     </section>
   );

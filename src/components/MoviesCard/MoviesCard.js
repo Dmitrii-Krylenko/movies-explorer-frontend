@@ -21,11 +21,11 @@ function MoviesCard({ movie }) {
         return `${t[0]}ч${t[1]}м`;
     }
     return (
-        <div className='movie'>
+        <section className='movie'>
             <img className='movie__image' src={`https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`} alt="name" />
-            <div className='movie__description'>
-                <p className='movie__description_text'>{movie.nameRU}</p>
-                {location.pathname === '/saved-movies' ? (<button type='button' className='movie__description_button_save-list'  ></button>) : (<button type='button' className={`movie__description_button ${fav && 'movie__description_button_save'}`} onClick={() => {
+            <div className='movie__description description-movie'>
+                <h2 className='description-movie__text'>{movie.nameRU}</h2>
+                {location.pathname === '/saved-movies' ? (<button type='button' className='description-movie__button-save-list'  ></button>) : (<button type='button' className={`description-movie__button ${fav && 'description-movie__button-save'}`} onClick={() => {
                     setFav(!fav)
                 }}></button>)}
 
@@ -37,7 +37,7 @@ function MoviesCard({ movie }) {
                 {/* {isSave ?( <button type='button' className='movie__description_button'  onClick={handleSave}></button>):(<button type='button' className='movie__description_button movie__description_button_save' onClick={handleSave}></button>)} */}
             </div>
             <p className='movie__duration'>{timeString(movie.duration)}</p>
-        </div>
+        </section>
     );
 }
 

@@ -24,7 +24,7 @@
     align-items: center;
 }
 
-.technologies__text-block_subtitle {
+.technologies-text__subtitle {
     font-size: 50px;
     font-weight: 400;
     line-height: 58px;
@@ -34,7 +34,7 @@
     padding-top: 90px;
 }
 
-.technologies__text-block_description {
+.technologies-text__description {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -54,7 +54,7 @@
     padding-bottom: 100px;
 }
 
-.technologies__studied_name {
+.studied__name {
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
@@ -77,11 +77,11 @@
         padding-right: 50px;
     }
 
-    .technologies__text-block_subtitle {
+    .technologies-text__subtitle {
         padding-top: 80px;
     }
 
-    .technologies__text-block_description {
+    .technologies-text__description {
         padding-top: 22px;
         font-size: 12px;
         line-height: 18px;
@@ -121,7 +121,7 @@
         padding-bottom: 70px;
     }
 
-    .technologies__text-block_subtitle {
+    .technologies-text__subtitle {
         padding-top: 60px;
         font-size: 30px;
         line-height: 36px;
@@ -141,14 +141,14 @@
         align-items: center;
     }
 
-    .technologies__text-block_description {
+    .technologies-text__description {
         padding-top: 24px;
         font-size: 11px;
         line-height: 16px;
         max-width: 460px;
     }
 
-    .technologies__studied_name {
+    .studied__name {
         font-size: 12px;
         line-height: 15px;
     }

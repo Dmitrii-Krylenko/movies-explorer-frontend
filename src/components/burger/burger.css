@@ -22,7 +22,7 @@
     visibility: visible;
 }
 
-.burger__button_link {
+.burger-button__link {
     font-size: 18px;
     font-weight: 500;
     line-height: 22px;
@@ -32,7 +32,7 @@
     padding-top: 28px;
 }
 
-.burger__button_link-profile {
+.burger-button__link-profile {
     font-size: 13px;
     font-weight: 500;
     line-height: 12px;
@@ -41,22 +41,22 @@
     text-decoration: none;
 }
 
-.burger__button_image {
+.burger-button__image {
     width: 26px;
     height: 26px;
     border-radius: 50px;
-    background-color: #313131;
+    /* background-color: #313131; */
     background-image: url('../../images/icon__COLOR_icon-main.png');
     background-position: center;
     background-repeat: no-repeat;
     margin-left: 7px;
 }
 
-.burger__button_image_blue {
+/* .burger-button__image_blue {
     background-color: #0F4157;
-}
+} */
 
-.burger__button_profile {
+.burger__button-profile {
     padding-top: 621px;
     display: flex;
     width: 212px;
@@ -81,7 +81,7 @@
 }
 
 .burger__close :hover,
-.burger__button_link :hover,
+.burger-button__link :hover,
 .burger__button_image:hover {
     opacity: 0.6;
     transition: 0.5s;
@@ -95,7 +95,7 @@
     }
 
 
-    .burger__button_profile {
+    .burger__button-profile {
         padding-top: 439px;
     }
 

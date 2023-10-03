@@ -7,13 +7,13 @@ function SavedMovies({ movies }) {
 
 
     return (
-        <div>
+        <section>
             <>
                 <SearchForm />
                 <MoviesCardList
                     movies={movies} />
             </>
-        </div>
+        </section>
 
     );
 }

@@ -32,8 +32,8 @@ function MoviesCardList({ movies, handleSave, isSave, width }) {
 
   }
   return (
-    <div>
-      <section className='elements'>
+    <section className='card-list' >
+      <div className='elements'>
 
         {movies.slice(0, count).map((movie) => (
           <MoviesCard
@@ -44,9 +44,9 @@ function MoviesCardList({ movies, handleSave, isSave, width }) {
           />
         ))}
 
-      </section>
-      {moreFlag && (<button type='button' onClick={showMore} className={`elements__button ${location.pathname === '/saved-movies' ? 'elements__button_none' : ''}`}>Ещё</button>)}
-    </div>
+      </div>
+      {moreFlag && (<button type='button' onClick={showMore} className={`card-list__button ${location.pathname === '/saved-movies' ? 'card-list__button_none' : ''}`}>Ещё</button>)}
+    </section>
 
   );
 }
