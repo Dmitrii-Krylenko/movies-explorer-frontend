@@ -1,12 +1,30 @@
 import React from 'react';
 import './searchForm.css'
 
-function SearchForm() {
+
+function SearchForm({ onSearch, searchQwery }) {
+  // const beforeSearch = window.localStorage.getItem('beforeSearch') || '';
+  const [searchMovies, setSearchMovies] = React.useState(searchQwery);
+
+
+  function handleValueSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const searchInput = form.querySelector('input');
+    onSearch(searchInput.value)
+    // window.localStorage.setItem('beforeSearch',searchInput.value)
+    // console.log(beforeSearch)
+  }
+
+  const handleChange = (e) => {
+    setSearchMovies(e.target.value);
+  }
+
   return (
     <section className='search'>
-      <form className='search__string'>
-        <input className='search__input' placeholder='Фильм' required></input>
-        <button className='search__button'></button>
+      <form className='search__string' onSubmit={handleValueSubmit}>
+        <input className='search__input' minLength={1} maxLength={40} required placeholder='Фильм' onChange={handleChange} value={searchMovies} ></input>
+        <button className='search__button' ></button>
       </form>
       <div className='search__short-film'>
         <label className='search__button-short button-short' htmlFor='checkbox'>

@@ -10,13 +10,32 @@ import '../index.css';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Movies from './Movies/Movies';
+import MoviesApi from '../utils/MoviesApi';
 
 function App() {
-
+  const moviesApi = new MoviesApi();
   const [movies, setMovies] = React.useState([]);
   const [islogin, setLogin] = React.useState(true);
   const [isSave, setSave] = React.useState(true);
   const [width, setWidth] = React.useState(window.innerWidth);
+  const beforeSearch = window.localStorage.getItem('beforeSearch') || '';
+  const [searchMovies, setSearchMovies] = React.useState(beforeSearch);
+
+  function nameTTT(searchQuery) {
+    moviesApi.getMovies()
+      .then((movies) => {
+        // setMovies(movies);
+        const filterMovies = movies.filter(function (item) {
+          return item.nameRU.includes(searchQuery) || item.nameEN.includes(searchQuery);
+
+        })
+        setMovies(filterMovies);
+        window.localStorage.setItem('beforeSearch',searchQuery)
+      }
+      )
+      .catch((error) => console.log(`Ошибка: ${error})`))
+  }
+
 
   React.useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
@@ -28,7 +47,11 @@ function App() {
     };
   }, []);
 
-
+ 
+  const onSearch = (value) => {
+    nameTTT(value);
+    setSearchMovies(value);
+  }
 
   const handleLogin = () => {
     setLogin(!islogin);
@@ -39,16 +62,8 @@ function App() {
   }
 
   React.useEffect(() => {
-
-    fetch('https://api.nomoreparties.co/beatfilm-movies')
-      .then((response) => {
-        return response.json();
-      })
-      .then((movies) => {
-        setMovies(movies);
-      })
-      .catch((error) => console.log(`Ошибка: ${error})`))
-  }, []);
+    nameTTT(searchMovies);
+  }, [searchMovies]);
 
 
   const isSign = window.location.pathname === '/movies' || window.location.pathname === '/saved-movies' || window.location.pathname === '/' || window.location.pathname === '/profile';
@@ -70,6 +85,8 @@ function App() {
         <Route path='/movies' element={
           <>
             <Movies
+            searchQwery={searchMovies}
+              onSearch={onSearch}
               width={width}
               isSave={isSave}
               handleSave={handleSave}
@@ -80,6 +97,7 @@ function App() {
         <Route path='/saved-movies' element={
           <>
             <SavedMovies
+              onSearch={onSearch}
               movies={movies} />
           </>
         } />

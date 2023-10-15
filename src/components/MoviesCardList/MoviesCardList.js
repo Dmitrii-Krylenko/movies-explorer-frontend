@@ -18,9 +18,9 @@ function MoviesCardList({ movies, handleSave, isSave, width }) {
     return 5
 
   }
-  // console.log(IsWindowWidht(width))
+
   const [count, setCount] = React.useState(IsWindowWidht(width));
-  const [moreFlag, setMoreFlag] = React.useState(true);
+  const [moreFlag, setMoreFlag] = React.useState(false);
   const location = useLocation()
 
   const showMore = () => {
@@ -28,9 +28,32 @@ function MoviesCardList({ movies, handleSave, isSave, width }) {
 
     if (count + FRAME > movies.length) {
       setMoreFlag(false);
+      console.log(count)
+      console.log(movies)
+    }
+  }
+
+  React.useEffect(() => {
+
+    // let start_flag = false;
+    // // console.log(IsWindowWidht(width))
+
+    // if (count + FRAME < movies.length) {
+    //   start_flag = true;
+    //   console.log('start_flag', start_flag)
+    // }
+
+    // console.log('start_flag >>', start_flag)
+
+    console.log('moreFlag', moreFlag)
+
+    if (count + FRAME < movies.length) {
+      setMoreFlag(true);
+      console.log(moreFlag)
     }
 
-  }
+  }, [moreFlag, count, movies])
+
   return (
     <section className='card-list' >
       <div className='elements'>

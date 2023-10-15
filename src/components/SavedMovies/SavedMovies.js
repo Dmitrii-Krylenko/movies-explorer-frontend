@@ -2,14 +2,16 @@ import React from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm';
 
-function SavedMovies({ movies }) {
+function SavedMovies({ movies, onSearch }) {
 
 
 
     return (
         <section>
             <>
-                <SearchForm />
+                <SearchForm 
+                onSearch ={onSearch}
+                />
                 <MoviesCardList
                     movies={movies} />
             </>
