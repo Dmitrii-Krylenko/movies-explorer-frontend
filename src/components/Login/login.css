@@ -1,3 +1,9 @@
+.error{
+    color: #FFFFFF;
+    display: flex;
+    padding-top: 50px;
+}
+
 .authorization {
     display: flex;
     flex-direction: column;
@@ -62,6 +68,7 @@
     border: none;
     transition: 0.5s;
     margin-top: 179px;
+    cursor: pointer;
 }
 
 .authorization__button_register {
@@ -96,7 +103,8 @@
 
 .links__blue:hover,
 .links__white:hover,
-.login__button:hover {
+.login__button:hover,
+.authorization__button:hover {
     opacity: 0.6;
     transition: 0.5s;
 }
