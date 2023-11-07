@@ -11,71 +11,140 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Movies from './Movies/Movies';
 import MoviesApi from '../utils/MoviesApi';
+import api from '../utils/MainApi';
 import * as auth from '../utils/Auth';
 import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { adapter } from '../utils/Adapter';
+import ProtectedRouteElement from './ProtectedRoute/ProtectedRoute';
+
+
 
 function App() {
   const moviesApi = new MoviesApi();
   const [movies, setMovies] = React.useState([]);
-  const [islogin, setLogin] = React.useState(true);
+  const [likeMovies, setLikeMovies] = React.useState([]);
+  const [favMovieId, setFavMovieId] = React.useState({});
+  const [islogin, setLogin] = React.useState(false);
   const [isSave, setSave] = React.useState(true);
   const [width, setWidth] = React.useState(window.innerWidth);
   const beforeSearch = window.localStorage.getItem('beforeSearch') || '';
   const [searchMovies, setSearchMovies] = React.useState(beforeSearch);
+  const [isShort, setShort] = React.useState(JSON.parse(localStorage.getItem('short')) || false);
   const [errText, setErrText] = React.useState('');
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
 
-  function nameTTT(searchQuery) {
-    moviesApi.getMovies()
-      .then((movies) => {
-        // setMovies(movies);
-        const filterMovies = movies.filter(function (item) {
-          return item.nameRU.includes(searchQuery) || item.nameEN.includes(searchQuery);
+  function shortMetrMovies(movies, short) {
+    if (short) {
+      return movies.filter((movie) => movie.duration <= 40);
+    }
+    return movies;
+  }
 
+  const favMovieID = (m, movieId) => {
+    const objectSave = {}
+    m.forEach(item => { objectSave[item[movieId]] = item._id })
+    return objectSave
+  }
+
+  const addFavMoveID = (id, _id) => {
+    const d = {}
+    d[id] = _id;
+    setFavMovieId({ ...favMovieId, ...d })
+  }
+
+  const removeFavMoveID = (id) => {
+    const sm = favMovieId;
+    delete sm[id];
+    setFavMovieId(sm);
+  }
+
+  const searchFavMovieID = (id) => {
+    return favMovieId[id];
+  }
+
+  function getMovies(searchQuery) {
+    setIsLoading(true)
+    api.getMovies()
+      .then((m) => {
+        setFavMovieId(favMovieID(m, 'movieId'));
+        moviesApi.getMovies()
+          .then((movies) => {
+            const adaptMovies = movies.map(adapter)
+            const filterMovies = adaptMovies.filter(function (item) {
+              return item.nameRU.includes(searchQuery) || item.nameEN.includes(searchQuery);
+
+            })
+            const filterShortMovies = shortMetrMovies(filterMovies, isShort)
+            setMovies(filterShortMovies);
+            setIsLoading(false)
+            window.localStorage.setItem('beforeSearch', searchQuery)
+          }
+          )
+          .catch((error) => console.log(`Ошибка: ${error})`))
+      })
+
+  }
+
+  function savedMovies(searchQuery) {
+    api.getMovies()
+      .then((likeMovies) => {
+        const filterMovies = likeMovies.filter(function (item) {
+          return item.nameRU.includes(searchQuery) || item.nameEN.includes(searchQuery);
         })
-        setMovies(filterMovies);
+        const filterShortMovies = shortMetrMovies(filterMovies, isShort)
+        setLikeMovies(filterShortMovies);
         window.localStorage.setItem('beforeSearch', searchQuery)
       }
       )
       .catch((error) => console.log(`Ошибка: ${error})`))
   }
 
+  function handleLikeMovie(movie) {
+    api
+      .createSaveMovies(movie)
+      .then((movie) => {
+        setLikeMovies([movie, ...likeMovies])
+        addFavMoveID(movie.movieId, movie._id);
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`))
+  }
+
+  function handleDeleteMovie(movie) {
+    api
+      .deleteMovies(searchFavMovieID(movie.movieId))
+      .then(() => {
+        setLikeMovies((state) => state.filter((item) => item._id !== movie._id))
+        removeFavMoveID(movie.movieId);
+      })
+      .catch((error) => console.log(`Ошибка: ${error}`));
+  }
+
   const checkToken = () => {
-console.log('call checkToken')
     auth.getToken()
       .then((user) => {
-        console.log("sssssss")
         if (!user) {
           return
         }
-        console.log("checkToken")
         handleLogin()
         setCurrentUser(user)
-        // setLoggedIn(true)
-        // setSuccsessful(true)
-        // setEmail(user.email)
-        // navigate('/')
       })
       .catch(
         (err) => {
-          // setSuccsessful(Fail)
           console.error(err)
         })
-
   }
 
   React.useEffect(
     () => {
-      
       checkToken();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []
   )
 
   function handleUpdateUser({ name, email }) {
-    moviesApi
+    api
       .editUserInfo(name, email)
       .then((data) => {
         setCurrentUser(data)
@@ -86,8 +155,9 @@ console.log('call checkToken')
   function handleRegister({ password, email, name }) {
     auth.register(name, password, email)
       .then((res) => {
-        navigate('/movies', { replace: true });
-        handleLogin()
+        login({ password, email })
+        // handleLogin()
+        // navigate('/movies', { replace: true });
       })
       .catch((err) => {
         setErrText(`ошибка ${err.status} ${err.statusText}`)
@@ -100,11 +170,8 @@ console.log('call checkToken')
   function login({ password, email }) {
     auth.login(password, email)
       .then((data) => {
-        console.log(data.user)
         handleLogin()
-        // setEmail(data.user.email);
         setCurrentUser(data.user);
-        // setLoggedIn(true);
         navigate('/movies', { replace: true });
       })
       .catch((err) => {
@@ -115,36 +182,31 @@ console.log('call checkToken')
 
   React.useEffect(() => {
     const handleResizeWindow = () => setWidth(window.innerWidth);
-    // subscribe to window resize event "onComponentDidMount"
     window.addEventListener("resize", handleResizeWindow);
     return () => {
-      // unsubscribe "onComponentDestroy"
       window.removeEventListener("resize", handleResizeWindow);
     };
   }, []);
-
+  const cleanerSerch = () => {
+    setSearchMovies(' ')
+  }
 
   const onSearch = (value) => {
-    nameTTT(value);
+    getMovies(value);
+    savedMovies(value)
     setSearchMovies(value);
   }
 
   const handleLogin = () => {
-    setLogin(false);
+    setLogin(true);
   }
 
   const handleSave = () => {
     setSave(!isSave);
   }
 
-  React.useEffect(() => {
-    nameTTT(searchMovies);
-  }, [searchMovies]);
-
-
   const isSign = window.location.pathname === '/movies' || window.location.pathname === '/saved-movies' || window.location.pathname === '/' || window.location.pathname === '/profile';
   const isSignfooter = window.location.pathname === '/movies' || window.location.pathname === '/saved-movies' || window.location.pathname === '/';
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='body' >
@@ -161,22 +223,48 @@ console.log('call checkToken')
           } />
           <Route path='/movies' element={
             <>
-              <Movies
-                searchQwery={searchMovies}
-                onSearch={onSearch}
-                width={width}
-                isSave={isSave}
-                handleSave={handleSave}
-                movies={movies}
-              />
-            </>
+              <ProtectedRouteElement
+                islogin={islogin}
+              /> {
+                <>
+                  <Movies
+                    savedMovies={savedMovies}
+                    getMovies={getMovies}
+                    setShort={setShort}
+                    isShort={isShort}
+                    isLoading={isLoading}
+                    deleteMovie={handleDeleteMovie}
+                    LikeMovie={handleLikeMovie}
+                    searchQwery={searchMovies}
+                    onSearch={onSearch}
+                    width={width}
+                    isSave={isSave}
+                    handleSave={handleSave}
+                    movies={movies}
+                    searchFavMovieID={searchFavMovieID}
+                  />
+                </>
+              }</>
           } />
           <Route path='/saved-movies' element={
             <>
-              <SavedMovies
-                onSearch={onSearch}
-                movies={movies} />
-            </>
+              <ProtectedRouteElement
+                islogin={islogin}
+              /> {
+                <>
+                  <SavedMovies
+                    savedMovies={savedMovies}
+                    getMovies={getMovies}
+                    setShort={setShort}
+                    isShort={isShort}
+                    searchQwery={searchMovies}
+                    LikeMovie={handleLikeMovie}
+                    searchFavMovieID={searchFavMovieID}
+                    deleteMovie={handleDeleteMovie}
+                    onSearch={onSearch}
+                    likeMovies={likeMovies} />
+                </>
+              }</>
           } />
           <Route path='/signin' element={
             <>
@@ -196,9 +284,16 @@ console.log('call checkToken')
           } />
           <Route path='/profile' element={
             <>
-              <Profile
-              onUpdateUser={handleUpdateUser} />
-            </>
+              <ProtectedRouteElement
+                islogin={islogin}
+              /> {
+                <>
+                  <Profile
+                    setLogin={setLogin}
+                    cleanerSerch={cleanerSerch}
+                    onUpdateUser={handleUpdateUser} />
+                </>
+              }</>
           } />
           <Route path='/*' element={
             <>

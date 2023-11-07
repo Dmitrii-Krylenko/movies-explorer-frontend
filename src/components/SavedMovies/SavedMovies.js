@@ -2,18 +2,27 @@ import React from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm';
 
-function SavedMovies({ movies, onSearch }) {
+function SavedMovies({ likeMovies, onSearch, deleteMovie, searchFavMovieID, LikeMovie, setShort, isShort, getMovies, savedMovies, searchQwery }) {
 
-
+    React.useEffect(() => {
+        getMovies(searchQwery);
+        savedMovies(searchQwery)
+    }, [searchQwery, isShort]);
 
     return (
         <section>
             <>
-                <SearchForm 
-                onSearch ={onSearch}
+                <SearchForm
+                    setShort={setShort}
+                    isShort={isShort}
+                    onSearch={onSearch}
                 />
                 <MoviesCardList
-                    movies={movies} />
+                    LikeMovie={LikeMovie}
+                    deleteMovie={deleteMovie}
+                    movies={likeMovies}
+                    searchFavMovieID={searchFavMovieID}
+                />
             </>
         </section>
 

@@ -1,49 +1,69 @@
 import React from 'react';
 import './profile.css'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import LogOut from '../LogOut/LogOut';
+import { useFormWithValidation } from '../../utils/Validation'
 
-function Profile({onUpdateUser}) {
-    const [name, setName] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const currentUser = React.useContext(CurrentUserContext);
-  
-    React.useEffect(() => {
-      setName(currentUser.name);
-      setEmail(currentUser.email);
-    }, [currentUser]);
-  
-    function handleChangeName(e) {
-      setName(e.target.value);
-    }
-  
-    function handleChangeEmail(e) {
-        setEmail(e.target.value);
-    }
-  
-    function handleSubmit(e) {
-      e.preventDefault();
+function Profile({ onUpdateUser, cleanerSerch, setLogin }) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const [name, setName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+
+  const [isShowButton, setShowButton] = React.useState(true);
+  const { handleChange, isValid, } = useFormWithValidation();
+
+  React.useEffect(() => {
+    setName(currentUser.name);
+    setEmail(currentUser.email);
+  }, [currentUser]);
+
+  function handleChangeName(e) {
+    setName(e.target.value);
+    handleChange(e)
+  }
+
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
+    handleChange(e)
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (isValid) {
       onUpdateUser({
         name: name,
         email: email,
       });
+      setShowButton(true)
     }
-    return (
-        <section className='profile'>
-            <form>
-                <h2 className='profile__title'>Привет, {currentUser.name}!</h2>
-                <div className='profile__change'>
-                    <p className='profile__change_title'>Имя</p>
-                    <input className='profile__change_data' name={"name"} type="text" minLength={2} maxLength={40} placeholder='Виталий' required onChange={handleChangeName} value={name || ''}/>
-                </div>
-                <div className='profile__change'>
-                    <p className='profile__change_title'>E-mail</p>
-                    <input className='profile__change_data' placeholder='qqq@www.ru' name={"email"} type="text" minLength={2} maxLength={40} required pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" onChange={handleChangeEmail} value={email || ''}/>
-                </div>
-                <button className='profile__edit' type='submit' onSubmit={handleSubmit}>Редактировать</button>
-                <button className='profile__exit'>Выйти из аккаунта</button>
-            </form>
-        </section>
-    );
+  }
+
+  function handleShowButton(e) {
+    e.preventDefault();
+    setShowButton((show) => !show);
+  }
+
+
+  return (
+    <section className='profile'>
+      <form className='profile__form' onSubmit={handleSubmit} noValidate>
+        <h2 className='profile__title'>Привет, {currentUser.name}!</h2>
+        <div className='profile__change'>
+          <p className='profile__change_title'>Имя</p>
+          <input className='profile__change_data' name={"name"} type="text" minLength={2} maxLength={40} placeholder='Виталий' required onChange={handleChangeName} value={name|| ""} disabled={isShowButton} />
+        </div>
+        <div className='profile__change'>
+          <p className='profile__change_title'>E-mail</p>
+          <input className='profile__change_data' placeholder='qqq@www.ru' name={"email"} type="text" minLength={2} maxLength={40} required onChange={handleChangeEmail} value={email|| ""} disabled={isShowButton} />
+        </div>
+        {isShowButton ? (<button className='profile__edit' onClick={handleShowButton} type='button' >Редактировать</button>) : (<button className={`authorization__button ${!isValid ? 'authorization__button_disabled authorization__button:disabled ' : ''}`} type='submit'>Сохранить</button>)}
+      </form>
+      <LogOut
+       setLogin={setLogin}
+        cleanerSerch={cleanerSerch}
+      />
+    </section>
+  );
 }
 
 export default Profile;

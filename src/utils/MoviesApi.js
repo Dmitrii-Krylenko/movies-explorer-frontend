@@ -1,3 +1,5 @@
+import { adapter } from "./Adapter"
+
 class MoviesApi {
     constructor(options) {
         // this._baseUrl = options.baseUrl

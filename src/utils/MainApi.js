@@ -1,3 +1,4 @@
+import { adapter } from "./Adapter"
 class Api {
     constructor(options) {
         this._baseUrl = options.baseUrl
@@ -43,11 +44,31 @@ class Api {
         })
         return this._checkResponse(response)
     }
+    async getMovies() {
+        const response = await fetch(`${this._baseUrl}/movies `, {
+            headers: this._headers,
+            credentials: 'include'
+        })
+
+        return this._checkResponse(response)
+    }
 
 
 
-    async deleteCard(id) {
-        const response = await fetch(`${this._baseUrl}/cards/${id}`, {
+    async createSaveMovies(movie) {
+        const response = await fetch(`${this._baseUrl}/movies `, {
+            method: "POST",
+            credentials: 'include',
+            headers: this._headers,
+            body: JSON.stringify(movie)
+        })
+        return this._checkResponse(response)
+    }
+
+
+
+    async deleteMovies(movieId) {
+        const response = await fetch(`${this._baseUrl}/movies/${movieId}`, {
             method: "DELETE",
             credentials: 'include',
             headers: this._headers
@@ -55,41 +76,14 @@ class Api {
         return this._checkResponse(response)
 
     }
-
-    async setLike (id){
-        const response = await fetch(`${this._baseUrl}/cards/${id}/likes`,{
-            method: "PUT",
-            credentials: 'include',
-            headers: this._headers
-        })
-        return this._checkResponse(response)
-
-    }
-
-    async deleteLike (id){
-        const response = await fetch(`${this._baseUrl}/cards/${id}/likes`,{
-            method: "DELETE",
-            credentials: 'include',
-            headers: this._headers
-        })
-        return this._checkResponse(response)
-
-    }
-    // async changeLikeCardStatus(id,iSLiked) {
-    //     if (!iSLiked) {
-    //         return await this.setLike(id)
-    //     } 
-    //     return await this.deleteLike(id)
-    // }  
-
 
 
 }
 
 const api = new Api({
     baseUrl: 'https://api.korolekdiplom.nomoredomainsicu.ru/',
+    // baseUrl: 'http://localhost:4000',
     headers: {
-        // authorization: '16cddbd8-a5a0-4ea8-ba7a-4e06d4944e1a',
         'Content-Type': 'application/json'
     }
 })

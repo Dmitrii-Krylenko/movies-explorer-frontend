@@ -1,0 +1,17 @@
+.profile__exit {
+    color: #EE3465;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0px;
+    border: none;
+    background-color: #202020;
+    padding-top: 16px;
+    cursor: pointer;
+    margin-bottom: 70px;
+}
+
+.profile__exit:hover {
+    opacity: 0.6;
+    transition: 0.5s;
+}

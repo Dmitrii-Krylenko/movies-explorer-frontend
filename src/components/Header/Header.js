@@ -9,7 +9,6 @@ function Header({ islogin, handleLogin }) {
   const location = useLocation()
   const navigate = useNavigate()
   const [burgerOpen, setIsBurgerOpen] = React.useState(false);
-
   const isOpenBurger = () => { setIsBurgerOpen(true) }
   const closeBurger = () => { setIsBurgerOpen(false) }
   function goHome() {
@@ -18,17 +17,16 @@ function Header({ islogin, handleLogin }) {
 
   return (
     <header className={`header ${location.pathname === '/' ? 'header_blue' : ''}`}>
-      {islogin ? (<div className='header__block'>
+      {!islogin ? (<div className='header__block'>
         <img className="logo" onClick={goHome} src={Logo} alt="логотип" />
         <div className="header__button">
           <Link className='header__button-registry' to="/signup">Регистрация</Link>
-          {/* <button className='header__button-registry'>Регистрация</button> */}
           <Link className='header__button-entry' to="/signin" onClick={handleLogin}>Войти</Link>
 
         </div>
       </div>) : (<div className='header__block-login'>
         <div className='logo-bpx'>
-          <img className="logo" src={Logo} alt="логотип" />
+          <img className="logo" onClick={goHome} src={Logo} alt="логотип" />
         </div>
         <div className='header__button-film button-film'>
           <Link className='button-film__link' to="/movies">Фильмы</Link>

@@ -1,21 +1,38 @@
 import React from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Preloader/Preloader';
 
-function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery }) {
+
+function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery, LikeMovie, deleteMovie, searchFavMovieID, isLoading, setShort, isShort, getMovies, savedMovies }) {
+
+    React.useEffect(() => {
+        getMovies(searchQwery);
+        savedMovies(searchQwery)
+    }, [searchQwery, isShort]);
 
     return (
         <section>
             <>
-                <SearchForm 
-                onSearch={onSearch}
-                searchQwery={searchQwery}
+                <SearchForm
+                    setShort={setShort}
+                    isShort={isShort}
+                    onSearch={onSearch}
+                    searchQwery={searchQwery}
                 />
-                <MoviesCardList
-                    width={width}
-                    isSave={isSave}
-                    handleSave={handleSave}
-                    movies={movies} />
+                {!isLoading ? (
+                    <MoviesCardList
+                        deleteMovie={deleteMovie}
+                        LikeMovie={LikeMovie}
+                        width={width}
+                        isSave={isSave}
+                        handleSave={handleSave}
+                        movies={movies}
+                        searchFavMovieID={searchFavMovieID}
+                    />
+                ) : (
+                    <Preloader />
+                )}
             </>
         </section>
 

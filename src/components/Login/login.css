@@ -70,6 +70,11 @@
     margin-top: 179px;
     cursor: pointer;
 }
+.authorization__button_disabled {
+    background: rgba(248, 248, 248, 1);
+    color:rgba(194, 194, 194, 1);
+    
+}
 
 .authorization__button_register {
     margin-top: 87px;
