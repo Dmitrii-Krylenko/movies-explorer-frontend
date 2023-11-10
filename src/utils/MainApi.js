@@ -81,8 +81,8 @@ class Api {
 }
 
 const api = new Api({
-    // baseUrl: 'https://api.korolekdiplom.nomoredomainsicu.ru',
-    baseUrl: 'http://localhost:4000',
+    baseUrl: 'https://api.korolekdiplom.nomoredomainsicu.ru',
+    // baseUrl: 'http://localhost:4000',
     headers: {
         'Content-Type': 'application/json'
     }

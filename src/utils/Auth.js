@@ -1,5 +1,5 @@
-// export const BASE_URL = 'https://api.korolekdiplom.nomoredomainsicu.ru';
-export const BASE_URL = 'http://localhost:4000';
+export const BASE_URL = 'https://api.korolekdiplom.nomoredomainsicu.ru';
+// export const BASE_URL = 'http://localhost:4000';
 
 export const register = (name, password, email) => {
     return fetch(`${BASE_URL}/signup`, {
