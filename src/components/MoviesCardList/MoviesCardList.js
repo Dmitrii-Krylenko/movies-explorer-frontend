@@ -35,7 +35,7 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
   return (
     <section className='card-list' >
       { movies.length === 0 ? (
-        <div >TODO</div>
+        <div className='card-list__nonMovie'><p className='card-list__nonMovie-message'>По вашему запросу ничего не найдено.</p></div>
       ) : (
       <div className='elements'>
         {movies.slice(0, count).map((movie) => (

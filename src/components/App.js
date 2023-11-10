@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { adapter } from '../utils/Adapter';
 import ProtectedRouteElement from './ProtectedRoute/ProtectedRoute';
+import Preloader from './Preloader/Preloader';
 
 
 
@@ -30,10 +31,13 @@ function App() {
   const [width, setWidth] = React.useState(window.innerWidth);
   const beforeSearch = window.localStorage.getItem('beforeSearch') || '';
   const [searchMovies, setSearchMovies] = React.useState(beforeSearch);
+  const [searchMoviesSaved, setSearchMoviesSaved] = React.useState('');
   const [isShort, setShort] = React.useState(JSON.parse(localStorage.getItem('short')) || false);
+  const [isShortSaved, setShortSaved] = React.useState(false);
   const [errText, setErrText] = React.useState('');
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isRenderPage, setIsRenderPage] = React.useState(true);
   const navigate = useNavigate();
 
   function shortMetrMovies(movies, short) {
@@ -98,7 +102,7 @@ function App() {
         })
         const filterShortMovies = shortMetrMovies(filterMovies, isShort)
         setLikeMovies(filterShortMovies);
-        window.localStorage.setItem('beforeSearch', searchQuery)
+        // window.localStorage.setItem('beforeSearch', searchQuery)
       }
       )
       .catch((error) => console.log(`Ошибка: ${error})`))
@@ -130,16 +134,25 @@ function App() {
   const checkToken = () => {
     auth.getToken()
       .then((user) => {
-        if (!user) {
-          return
+        // if (!user) {
+        //   return
+        // }
+        if (user) {
+          handleLogin()
+          setCurrentUser(user)
         }
-        handleLogin()
-        setCurrentUser(user)
+        else {
+          setLogin(false)
+        }
       })
       .catch(
         (err) => {
           console.error(err)
         })
+      .finally(() => {
+        setIsRenderPage(false)
+      })
+
   }
 
   React.useEffect(
@@ -213,107 +226,118 @@ function App() {
   const isSign = window.location.pathname === '/movies' || window.location.pathname === '/saved-movies' || window.location.pathname === '/' || window.location.pathname === '/profile';
   const isSignfooter = window.location.pathname === '/movies' || window.location.pathname === '/saved-movies' || window.location.pathname === '/';
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className='body' >
-        {isSign && (<Header
-          islogin={islogin}
-          handleLogin={handleLogin} isSignfooter
-        />)}
-        <Routes>
+    <>
+      {
 
-          <Route path='/' element={
-            <>
-              <Main />
-            </>
-          } />
-          <Route path='/movies' element={
-            <>
-              <ProtectedRouteElement
+        isRenderPage ? <Preloader></Preloader>: (
+          <CurrentUserContext.Provider value={currentUser}>
+            <div className='body' >
+
+              {isSign && (<Header
                 islogin={islogin}
-              /> {
-                <>
-                  <Movies
-                    savedMovies={savedMovies}
-                    getMovies={getMovies}
-                    setShort={setShort}
-                    isShort={isShort}
-                    isLoading={isLoading}
-                    deleteMovie={handleDeleteMovie}
-                    LikeMovie={handleLikeMovie}
-                    searchQwery={searchMovies}
-                    onSearch={onSearch}
-                    width={width}
-                    isSave={isSave}
-                    handleSave={handleSave}
-                    movies={movies}
-                    searchFavMovieID={searchFavMovieID}
-                  />
-                </>
-              }</>
-          } />
-          <Route path='/saved-movies' element={
-            <>
-              <ProtectedRouteElement
+                handleLogin={handleLogin} isSignfooter
+              />)}
+              <Routes>
+
+                <Route path='/' element={
+                  <>
+                    <Main />
+                  </>
+                } />
+                <Route path='/movies' element={
+                  <>
+                    <ProtectedRouteElement
+                      islogin={islogin}
+                    /> {
+                      <>
+                        <Movies
+                          savedMovies={savedMovies}
+                          getMovies={getMovies}
+                          setShort={setShort}
+                          isShort={isShort}
+                          isLoading={isLoading}
+                          deleteMovie={handleDeleteMovie}
+                          LikeMovie={handleLikeMovie}
+                          searchQwery={searchMovies}
+                          onSearch={onSearch}
+                          width={width}
+                          isSave={isSave}
+                          handleSave={handleSave}
+                          movies={movies}
+                          searchFavMovieID={searchFavMovieID}
+                        />
+                      </>
+                    }</>
+                } />
+                <Route path='/saved-movies' element={
+                  <>
+                    <ProtectedRouteElement
+                      islogin={islogin}
+                    /> {
+                      <>
+                        <SavedMovies
+                          savedMovies={savedMovies}
+                          getMovies={getMovies}
+                          setShort={setShort}
+                          isShort={isShort}
+                          searchQwery={searchMovies}
+                          LikeMovie={handleLikeMovie}
+                          searchFavMovieID={searchFavMovieID}
+                          deleteMovie={handleDeleteMovie}
+                          onSearch={onSearch}
+                          likeMovies={likeMovies} />
+                      </>
+                    }</>
+                } />
+                <Route path='/signin' element={
+                  <>
+                    <Login
+                      errText={errText}
+                      onlogin={login}
+                    />
+                  </>
+                } />
+                <Route path='/signup' element={
+                  <>
+                    <Register
+                      errText={errText}
+                      onRegister={handleRegister}
+                    />
+                  </>
+                } />
+                <Route path='/profile' element={
+                  <>
+                    <ProtectedRouteElement
+                      islogin={islogin}
+                    /> {
+                      <>
+                        <Profile
+                          searchMovies={searchMovies}
+                          setLogin={setLogin}
+                          cleanerSerch={cleanerSerch}
+                          onUpdateUser={handleUpdateUser} />
+                      </>
+                    }</>
+                } />
+                <Route path='/*' element={
+                  <>
+                    <NotFound />
+                  </>
+                } />
+              </Routes>
+              {isSignfooter && (<Footer
                 islogin={islogin}
-              /> {
-                <>
-                  <SavedMovies
-                    savedMovies={savedMovies}
-                    getMovies={getMovies}
-                    setShort={setShort}
-                    isShort={isShort}
-                    searchQwery={searchMovies}
-                    LikeMovie={handleLikeMovie}
-                    searchFavMovieID={searchFavMovieID}
-                    deleteMovie={handleDeleteMovie}
-                    onSearch={onSearch}
-                    likeMovies={likeMovies} />
-                </>
-              }</>
-          } />
-          <Route path='/signin' element={
-            <>
-              <Login
-                errText={errText}
-                onlogin={login}
-              />
-            </>
-          } />
-          <Route path='/signup' element={
-            <>
-              <Register
-                errText={errText}
-                onRegister={handleRegister}
-              />
-            </>
-          } />
-          <Route path='/profile' element={
-            <>
-              <ProtectedRouteElement
-                islogin={islogin}
-              /> {
-                <>
-                  <Profile
-                  searchMovies={searchMovies}
-                    setLogin={setLogin}
-                    cleanerSerch={cleanerSerch}
-                    onUpdateUser={handleUpdateUser} />
-                </>
-              }</>
-          } />
-          <Route path='/*' element={
-            <>
-              <NotFound />
-            </>
-          } />
-        </Routes>
-        {isSignfooter && (<Footer
-          islogin={islogin}
-          handleLogin={handleLogin}
-        />)}
-      </div>
-    </CurrentUserContext.Provider>
-  );
+                handleLogin={handleLogin}
+              />)}
+            </div>
+          </CurrentUserContext.Provider>
+
+
+        )
+      }
+
+
+    </>);
 }
 
 export default App;

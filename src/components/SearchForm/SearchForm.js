@@ -12,7 +12,7 @@ function SearchForm({ onSearch, searchQwery, setShort, isShort }) {
     onSearch(searchInput.value)
   }
   const hendleShort = () => {
-    setShort(!isShort)
+    setShort(!isShort) 
   }
 
   const handleChange = (e) => {

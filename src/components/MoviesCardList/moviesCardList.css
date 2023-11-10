@@ -34,6 +34,18 @@
     display: none;
 }
 
+.card-list__nonMovie {
+display: flex;
+}
+
+.card-list__nonMovie-message {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    margin: 0 auto;
+    color: #fff;
+}
+
 
 @media screen and (max-width: 980px) {
 
