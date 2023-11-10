@@ -73,8 +73,9 @@ function App() {
         moviesApi.getMovies()
           .then((movies) => {
             const adaptMovies = movies.map(adapter)
+            const lowerSerch = searchQuery.toLowerCase()
             const filterMovies = adaptMovies.filter(function (item) {
-              return item.nameRU.includes(searchQuery) || item.nameEN.includes(searchQuery);
+              return item.nameRU.toLowerCase().includes(lowerSerch) || item.nameEN.toLowerCase().includes(lowerSerch);
 
             })
             const filterShortMovies = shortMetrMovies(filterMovies, isShort)
@@ -91,8 +92,9 @@ function App() {
   function savedMovies(searchQuery) {
     api.getMovies()
       .then((likeMovies) => {
+        const lowerSerch = searchQuery.toLowerCase()
         const filterMovies = likeMovies.filter(function (item) {
-          return item.nameRU.includes(searchQuery) || item.nameEN.includes(searchQuery);
+          return item.nameRU.toLowerCase().includes(lowerSerch) || item.nameEN.toLowerCase().includes(lowerSerch);
         })
         const filterShortMovies = shortMetrMovies(filterMovies, isShort)
         setLikeMovies(filterShortMovies);
@@ -103,21 +105,24 @@ function App() {
   }
 
   function handleLikeMovie(movie) {
-    api
+    return api
       .createSaveMovies(movie)
       .then((movie) => {
         setLikeMovies([movie, ...likeMovies])
         addFavMoveID(movie.movieId, movie._id);
+        return movie;
       })
       .catch((error) => console.log(`Ошибка: ${error}`))
   }
 
   function handleDeleteMovie(movie) {
-    api
+    return api
       .deleteMovies(searchFavMovieID(movie.movieId))
       .then(() => {
         setLikeMovies((state) => state.filter((item) => item._id !== movie._id))
         removeFavMoveID(movie.movieId);
+        return movie;
+
       })
       .catch((error) => console.log(`Ошибка: ${error}`));
   }
@@ -289,6 +294,7 @@ function App() {
               /> {
                 <>
                   <Profile
+                  searchMovies={searchMovies}
                     setLogin={setLogin}
                     cleanerSerch={cleanerSerch}
                     onUpdateUser={handleUpdateUser} />

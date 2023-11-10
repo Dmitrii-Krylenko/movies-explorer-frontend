@@ -59,7 +59,7 @@
     letter-spacing: 0px;
     border: none;
     background-color: #202020;
-    padding-top: 206px;
+    padding-top: 20px;
     cursor: pointer;
 }
 
@@ -98,6 +98,21 @@
     align-items: center;
 }
 
+.profile__error-block {
+display: flex;
+flex-direction: column;
+padding-top: 180px;
+}
+
+.profile__error-messege {
+font-size: 11px;
+font-weight: 400;
+line-height: 13px;
+letter-spacing: 0px;
+text-align: center;
+color: rgba(255, 0, 76, 1);
+}
+
 @media screen and (max-width: 768px) {
 
     .profile {
@@ -114,10 +129,10 @@
         line-height: 13px;
         letter-spacing: 0px;
     }
-
-    .profile__edit {
-        padding-top: 200px;
+    .profile__error-block{
+        padding-top: 180px;
     }
+
 }
 
 @media screen and (max-width: 440px) {
@@ -133,9 +148,11 @@
     .profile__title {
         padding-bottom: 65px;
     }
+    .profile__error-block{
+        padding-top: 346px;
+    }
 
     .profile__edit {
-        padding-top: 366px;
         font-size: 12px;
         line-height: 15px;
     }

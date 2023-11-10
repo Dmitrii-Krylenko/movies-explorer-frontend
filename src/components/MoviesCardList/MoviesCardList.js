@@ -34,6 +34,9 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
 
   return (
     <section className='card-list' >
+      { movies.length === 0 ? (
+        <div >TODO</div>
+      ) : (
       <div className='elements'>
         {movies.slice(0, count).map((movie) => (
           <MoviesCard
@@ -46,7 +49,7 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
             favId={searchFavMovieID(movie.movieId)}
           />
         ))}
-      </div>
+      </div>)}
       {moreFlag && (<button type='button' onClick={showMore} className={`card-list__button ${location.pathname === '/saved-movies' ? 'card-list__button_none' : ''}`}>Ещё</button>)}
     </section>
   );

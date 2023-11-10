@@ -2,14 +2,15 @@ import React from 'react';
 import * as auth from '../../utils/Auth';
 import './logout.css'
 
-function LogOut({ cleanerSerch, setLogin }) {
+function LogOut({ cleanerSerch, setLogin,searchMovies }) {
 
-  function handleRegister() {
+  function handleExit() {
     auth.logout()
       .then((res) => {
         cleanerSerch()
         setLogin(false)
         localStorage.clear();
+        localStorage.removeItem(searchMovies)
       })
       .catch((err) => {
         console.log('logout err')
@@ -18,7 +19,7 @@ function LogOut({ cleanerSerch, setLogin }) {
       });
   }
   return (
-    <form onSubmit={handleRegister} >
+    <form onSubmit={handleExit} >
       <button className='profile__exit' type='submit'>Выйти из аккаунта</button>
     </form>
   );

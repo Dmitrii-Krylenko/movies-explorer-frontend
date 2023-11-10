@@ -23,11 +23,18 @@ function MoviesCard({ movie, LikeMovie, deleteMovie, favId }) {
 
   function toggleSave() {
     if (fav) {
-      deleteMovie(movie);
+      deleteMovie(movie)
+        .then((response) => {
+          setFav(!fav);
+        })
     } else {
-      LikeMovie(movie);
+      LikeMovie(movie)
+        .then((response) => {
+          setFav(!fav);
+        })
+
     }
-    setFav(!fav);
+
   }
 
   return (
