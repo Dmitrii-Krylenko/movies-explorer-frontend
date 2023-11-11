@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 import './moviesCardList.css'
 import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMovie, searchFavMovieID }) {
+function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMovie, searchFavMovieId }) {
   const FRAME = 4;
   const IsWindowWidht = (width) => {
     if (width >= 768) {
@@ -34,22 +34,22 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
 
   return (
     <section className='card-list' >
-      { movies.length === 0 ? (
+      {movies.length === 0 ? (
         <div className='card-list__nonMovie'><p className='card-list__nonMovie-message'>По вашему запросу ничего не найдено.</p></div>
       ) : (
-      <div className='elements'>
-        {movies.slice(0, count).map((movie) => (
-          <MoviesCard
-            deleteMovie={deleteMovie}
-            LikeMovie={LikeMovie}
-            isSave={isSave}
-            handleSave={handleSave}
-            key={movie.movieId}
-            movie={movie}
-            favId={searchFavMovieID(movie.movieId)}
-          />
-        ))}
-      </div>)}
+        <div className='elements'>
+          {movies.slice(0, count).map((movie) => (
+            <MoviesCard
+              deleteMovie={deleteMovie}
+              LikeMovie={LikeMovie}
+              isSave={isSave}
+              handleSave={handleSave}
+              key={movie.movieId}
+              movie={movie}
+              favId={searchFavMovieId(movie.movieId)}
+            />
+          ))}
+        </div>)}
       {moreFlag && (<button type='button' onClick={showMore} className={`card-list__button ${location.pathname === '/saved-movies' ? 'card-list__button_none' : ''}`}>Ещё</button>)}
     </section>
   );

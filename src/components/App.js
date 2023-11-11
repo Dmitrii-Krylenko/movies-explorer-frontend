@@ -32,7 +32,8 @@ function App() {
   const beforeSearch = window.localStorage.getItem('beforeSearch') || '';
   const [searchMovies, setSearchMovies] = React.useState(beforeSearch);
   const [searchMoviesSaved, setSearchMoviesSaved] = React.useState('');
-  const [isShort, setShort] = React.useState(JSON.parse(localStorage.getItem('short')) || false);
+  const beforeShort = window.localStorage.getItem('short') === 'true';
+  const [isShort, setShort] = React.useState(beforeShort);
   const [isShortSaved, setShortSaved] = React.useState(false);
   const [errText, setErrText] = React.useState('');
   const [currentUser, setCurrentUser] = React.useState({});
@@ -47,13 +48,13 @@ function App() {
     return movies;
   }
 
-  const favMovieID = (m, movieId) => {
+  const generateFavMovieId = (m, movieId) => {
     const objectSave = {}
     m.forEach(item => { objectSave[item[movieId]] = item._id })
     return objectSave
   }
 
-  const addFavMoveID = (id, _id) => {
+  const addFavMoveId = (id, _id) => {
     const d = {}
     d[id] = _id;
     setFavMovieId({ ...favMovieId, ...d })
@@ -65,7 +66,7 @@ function App() {
     setFavMovieId(sm);
   }
 
-  const searchFavMovieID = (id) => {
+  const searchFavMovieId = (id) => {
     return favMovieId[id];
   }
 
@@ -73,7 +74,7 @@ function App() {
     setIsLoading(true)
     api.getMovies()
       .then((m) => {
-        setFavMovieId(favMovieID(m, 'movieId'));
+        setFavMovieId(generateFavMovieId(m, 'movieId'));
         moviesApi.getMovies()
           .then((movies) => {
             const adaptMovies = movies.map(adapter)
@@ -82,10 +83,11 @@ function App() {
               return item.nameRU.toLowerCase().includes(lowerSerch) || item.nameEN.toLowerCase().includes(lowerSerch);
 
             })
-            const filterShortMovies = shortMetrMovies(filterMovies, isShort)
+            const filterShortMovies = shortMetrMovies(filterMovies, !isShort)
             setMovies(filterShortMovies);
             setIsLoading(false)
-            window.localStorage.setItem('beforeSearch', searchQuery)
+            // window.localStorage.setItem('beforeSearch', searchQuery)
+            // window.localStorage.setItem('short', short)
           }
           )
           .catch((error) => console.log(`Ошибка: ${error})`))
@@ -100,7 +102,7 @@ function App() {
         const filterMovies = likeMovies.filter(function (item) {
           return item.nameRU.toLowerCase().includes(lowerSerch) || item.nameEN.toLowerCase().includes(lowerSerch);
         })
-        const filterShortMovies = shortMetrMovies(filterMovies, isShort)
+        const filterShortMovies = shortMetrMovies(filterMovies, isShortSaved)
         setLikeMovies(filterShortMovies);
         // window.localStorage.setItem('beforeSearch', searchQuery)
       }
@@ -113,7 +115,7 @@ function App() {
       .createSaveMovies(movie)
       .then((movie) => {
         setLikeMovies([movie, ...likeMovies])
-        addFavMoveID(movie.movieId, movie._id);
+        addFavMoveId(movie.movieId, movie._id);
         return movie;
       })
       .catch((error) => console.log(`Ошибка: ${error}`))
@@ -121,7 +123,7 @@ function App() {
 
   function handleDeleteMovie(movie) {
     return api
-      .deleteMovies(searchFavMovieID(movie.movieId))
+      .deleteMovies(searchFavMovieId(movie.movieId))
       .then(() => {
         setLikeMovies((state) => state.filter((item) => item._id !== movie._id))
         removeFavMoveID(movie.movieId);
@@ -207,13 +209,21 @@ function App() {
   }, []);
   const cleanerSerch = () => {
     setSearchMovies(' ')
+    setSearchMoviesSaved(' ')
   }
 
-  const onSearch = (value) => {
+  const onSearch = (value, short = false) => {
     getMovies(value);
-    savedMovies(value)
     setSearchMovies(value);
+    window.localStorage.setItem('beforeSearch', value)
+    window.localStorage.setItem('short', short)
   }
+
+  const onSearchSaved = (value) => {
+    savedMovies(value)
+    setSearchMoviesSaved(' ')
+  }
+
 
   const handleLogin = () => {
     setLogin(true);
@@ -229,7 +239,7 @@ function App() {
     <>
       {
 
-        isRenderPage ? <Preloader></Preloader>: (
+        isRenderPage ? <Preloader></Preloader> : (
           <CurrentUserContext.Provider value={currentUser}>
             <div className='body' >
 
@@ -264,7 +274,7 @@ function App() {
                           isSave={isSave}
                           handleSave={handleSave}
                           movies={movies}
-                          searchFavMovieID={searchFavMovieID}
+                          searchFavMovieId={searchFavMovieId}
                         />
                       </>
                     }</>
@@ -278,13 +288,13 @@ function App() {
                         <SavedMovies
                           savedMovies={savedMovies}
                           getMovies={getMovies}
-                          setShort={setShort}
-                          isShort={isShort}
-                          searchQwery={searchMovies}
+                          setShort={setShortSaved}
+                          isShort={isShortSaved}
+                          searchQwery={searchMoviesSaved}
                           LikeMovie={handleLikeMovie}
-                          searchFavMovieID={searchFavMovieID}
+                          searchFavMovieId={searchFavMovieId}
                           deleteMovie={handleDeleteMovie}
-                          onSearch={onSearch}
+                          onSearch={onSearchSaved}
                           likeMovies={likeMovies} />
                       </>
                     }</>

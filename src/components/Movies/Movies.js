@@ -4,12 +4,12 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 
 
-function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery, LikeMovie, deleteMovie, searchFavMovieID, isLoading, setShort, isShort, getMovies, savedMovies }) {
+function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery, LikeMovie, deleteMovie, searchFavMovieId, isLoading, setShort, isShort, getMovies, savedMovies }) {
 
-    React.useEffect(() => {
-        getMovies(searchQwery);
-        savedMovies(searchQwery)
-    }, [searchQwery, isShort]);
+    // React.useEffect(() => {
+    //     getMovies(searchQwery);
+    //     savedMovies(searchQwery)
+    // }, [searchQwery, isShort]);
 
     return (
         <section>
@@ -28,7 +28,7 @@ function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery, Like
                         isSave={isSave}
                         handleSave={handleSave}
                         movies={movies}
-                        searchFavMovieID={searchFavMovieID}
+                        searchFavMovieId={searchFavMovieId}
                     />
                 ) : (
                     <Preloader />

@@ -66,7 +66,7 @@ function Profile({ onUpdateUser, cleanerSerch, setLogin, searchMovies }) {
         {isShowButton ? (<div className='profile__error-block'>  <span className='profile__error-messege'>{successfull}</span>   <button className='profile__edit' onClick={handleShowButton} type='button' >Редактировать</button> </div>) : (<button className={`authorization__button ${!isValid || previousUser ? 'authorization__button_disabled authorization__button:disabled ' : ''}`} type='submit'>Сохранить</button>)}
       </form>
       <LogOut
-      searchMovies={searchMovies}
+        searchMovies={searchMovies}
         setLogin={setLogin}
         cleanerSerch={cleanerSerch}
       />

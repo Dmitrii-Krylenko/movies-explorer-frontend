@@ -74,13 +74,13 @@ export const logout = () => {
 
         credentials: 'include'
     })
-        // .then((response) => {
+    // .then((response) => {
 
-        //     if (response.ok) {
-        //         return response.json();
-        //     }
-        //     throw response
-        // })
+    //     if (response.ok) {
+    //         return response.json();
+    //     }
+    //     throw response
+    // })
 }
 
 export const getToken = () => {

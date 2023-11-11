@@ -5,14 +5,16 @@ import './searchForm.css'
 function SearchForm({ onSearch, searchQwery, setShort, isShort }) {
   const [searchMovies, setSearchMovies] = React.useState(searchQwery);
 
+
+
   function handleValueSubmit(e) {
     e.preventDefault();
-    const form = e.target;
-    const searchInput = form.querySelector('input');
-    onSearch(searchInput.value)
+
+    onSearch(searchMovies, !isShort)
   }
   const hendleShort = () => {
-    setShort(!isShort) 
+    onSearch(searchMovies, !isShort)
+    setShort(!isShort)
   }
 
   const handleChange = (e) => {
@@ -22,7 +24,7 @@ function SearchForm({ onSearch, searchQwery, setShort, isShort }) {
   return (
     <section className='search'>
       <form className='search__string' onSubmit={handleValueSubmit}>
-        <input className='search__input' minLength={1} maxLength={40} required placeholder='Фильм' onChange={handleChange} value={searchMovies} ></input>
+        <input className='search__input' minLength={1} maxLength={40} placeholder='Фильм' onChange={handleChange} value={searchMovies} ></input>
         <button className='search__button' ></button>
       </form>
       <div className='search__short-film'>
