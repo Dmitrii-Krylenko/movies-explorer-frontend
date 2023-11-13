@@ -4,11 +4,10 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import LogOut from '../LogOut/LogOut';
 import { useFormWithValidation } from '../../utils/Validation'
 
-function Profile({ onUpdateUser, cleanerSerch, setLogin, searchMovies }) {
+function Profile({ onUpdateUser, cleanerSerch, setLogin, searchMovies, successfull, setsuccessfull }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
-  const [successfull, setsuccessfull] = React.useState('');
   const [isShowButton, setShowButton] = React.useState(true);
   const { handleChange, isValid } = useFormWithValidation();
   const previousUser = name === currentUser.name && email === currentUser.email;
@@ -36,7 +35,6 @@ function Profile({ onUpdateUser, cleanerSerch, setLogin, searchMovies }) {
         email: email,
       });
       setShowButton(true)
-      setsuccessfull('Данные успешно изменены')
     }
   }
 

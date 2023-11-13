@@ -39,6 +39,8 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
   const [isRenderPage, setIsRenderPage] = React.useState(true);
+  const [successfull, setsuccessfull] = React.useState('');
+  const [isNonMovieMessage, setNonMovieMessage] = React.useState('')
   const navigate = useNavigate();
 
   function shortMetrMovies(movies, short) {
@@ -86,10 +88,14 @@ function App() {
             const filterShortMovies = shortMetrMovies(filterMovies, !isShort)
             setMovies(filterShortMovies);
             setIsLoading(false)
+            if (filterShortMovies.length === 0) {
+              setNonMovieMessage('По вашему запросу ничего не найдено.')
+            }
             // window.localStorage.setItem('beforeSearch', searchQuery)
             // window.localStorage.setItem('short', short)
           }
           )
+
           .catch((error) => console.log(`Ошибка: ${error})`))
       })
 
@@ -105,8 +111,12 @@ function App() {
         const filterShortMovies = shortMetrMovies(filterMovies, isShortSaved)
         setLikeMovies(filterShortMovies);
         // window.localStorage.setItem('beforeSearch', searchQuery)
+        if (filterShortMovies.length === 0) {
+          setNonMovieMessage('По вашему запросу ничего не найдено.')
+        }
       }
       )
+      console.log(searchQuery)
       .catch((error) => console.log(`Ошибка: ${error})`))
   }
 
@@ -168,6 +178,7 @@ function App() {
       .editUserInfo(name, email)
       .then((data) => {
         setCurrentUser(data)
+        setsuccessfull('Данные успешно изменены')
       })
       .catch((error) => console.log(`Ошибка: ${error}`));
   }
@@ -261,6 +272,8 @@ function App() {
                     /> {
                       <>
                         <Movies
+                          isNonMovieMessage={isNonMovieMessage}
+                          setNonMovieMessage={setNonMovieMessage}
                           savedMovies={savedMovies}
                           getMovies={getMovies}
                           setShort={setShort}
@@ -286,6 +299,8 @@ function App() {
                     /> {
                       <>
                         <SavedMovies
+                          isNonMovieMessage={isNonMovieMessage}
+                          setNonMovieMessage={setNonMovieMessage}
                           savedMovies={savedMovies}
                           getMovies={getMovies}
                           setShort={setShortSaved}
@@ -322,6 +337,8 @@ function App() {
                     /> {
                       <>
                         <Profile
+                          setsuccessfull={setsuccessfull}
+                          successfull={successfull}
                           searchMovies={searchMovies}
                           setLogin={setLogin}
                           cleanerSerch={cleanerSerch}

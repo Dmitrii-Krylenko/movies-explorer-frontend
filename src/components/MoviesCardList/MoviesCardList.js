@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 import './moviesCardList.css'
 import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMovie, searchFavMovieId }) {
+function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMovie, searchFavMovieId, isNonMovieMessage, setNonMovieMessage }) {
   const FRAME = 4;
   const IsWindowWidht = (width) => {
     if (width >= 768) {
@@ -18,6 +18,7 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
   const [count, setCount] = React.useState(IsWindowWidht(width));
   const [moreFlag, setMoreFlag] = React.useState(false);
   const location = useLocation()
+
   const showMore = () => {
     setCount(count + FRAME);
 
@@ -29,13 +30,14 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
   React.useEffect(() => {
     if (count + FRAME < movies.length) {
       setMoreFlag(true);
+      setNonMovieMessage('')
     }
   }, [moreFlag, count, movies])
 
   return (
     <section className='card-list' >
       {movies.length === 0 ? (
-        <div className='card-list__nonMovie'><p className='card-list__nonMovie-message'>По вашему запросу ничего не найдено.</p></div>
+        <div className='card-list__nonMovie'><p className='card-list__nonMovie-message'>{isNonMovieMessage}</p></div>
       ) : (
         <div className='elements'>
           {movies.slice(0, count).map((movie) => (

@@ -2,7 +2,7 @@ import React from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm';
 
-function SavedMovies({ likeMovies, onSearch, deleteMovie, searchFavMovieId, LikeMovie, setShort, isShort, getMovies, savedMovies, searchQwery }) {
+function SavedMovies({ likeMovies, onSearch, deleteMovie, searchFavMovieId, LikeMovie, setShort, isShort, getMovies, savedMovies, searchQwery, isNonMovieMessage, setNonMovieMessage }) {
 
     React.useEffect(() => {
         getMovies(searchQwery);
@@ -19,6 +19,8 @@ function SavedMovies({ likeMovies, onSearch, deleteMovie, searchFavMovieId, Like
                     searchQwery={searchQwery}
                 />
                 <MoviesCardList
+                    isNonMovieMessage={isNonMovieMessage}
+                    setNonMovieMessage={setNonMovieMessage}
                     LikeMovie={LikeMovie}
                     deleteMovie={deleteMovie}
                     movies={likeMovies}

@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 
 
-function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery, LikeMovie, deleteMovie, searchFavMovieId, isLoading, setShort, isShort, getMovies, savedMovies }) {
+function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery, LikeMovie, deleteMovie, searchFavMovieId, isLoading, setShort, isShort, getMovies, savedMovies, isNonMovieMessage, setNonMovieMessage }) {
 
     // React.useEffect(() => {
     //     getMovies(searchQwery);
@@ -22,6 +22,8 @@ function Movies({ movies, handleSave, isSave, width, onSearch, searchQwery, Like
                 />
                 {!isLoading ? (
                     <MoviesCardList
+                        isNonMovieMessage={isNonMovieMessage}
+                        setNonMovieMessage={setNonMovieMessage}
                         deleteMovie={deleteMovie}
                         LikeMovie={LikeMovie}
                         width={width}
