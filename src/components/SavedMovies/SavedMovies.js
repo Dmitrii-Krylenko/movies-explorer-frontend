@@ -7,7 +7,7 @@ function SavedMovies({ likeMovies, onSearch, deleteMovie, searchFavMovieId, Like
     React.useEffect(() => {
         getMovies(searchQwery);
         savedMovies(searchQwery)
-    }, [searchQwery, isShort]);
+    }, [searchQwery]);
 
     return (
         <section>

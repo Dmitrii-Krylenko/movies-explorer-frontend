@@ -116,7 +116,7 @@ function App() {
         }
       }
       )
-      console.log(searchQuery)
+    
       .catch((error) => console.log(`Ошибка: ${error})`))
   }
 
