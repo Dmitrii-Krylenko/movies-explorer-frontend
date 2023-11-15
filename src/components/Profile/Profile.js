@@ -45,7 +45,6 @@ function Profile({ onUpdateUser, cleanerSerch, setLogin, searchMovies, successfu
 
 
   React.useEffect(() => {
-    ('');
     setsuccessfull('');
   }, []);
 

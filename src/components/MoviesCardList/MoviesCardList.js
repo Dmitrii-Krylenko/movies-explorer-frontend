@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 import './moviesCardList.css'
 import { useLocation } from 'react-router-dom';
 
-function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMovie, searchFavMovieId, isNonMovieMessage, setNonMovieMessage }) {
+function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMovie, searchFavMovieID, isNonMovieMessage, setNonMovieMessage }) {
   const FRAME = 4;
   const IsWindowWidht = (width) => {
     if (width >= 768) {
@@ -18,7 +18,6 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
   const [count, setCount] = React.useState(IsWindowWidht(width));
   const [moreFlag, setMoreFlag] = React.useState(false);
   const location = useLocation()
-
   const showMore = () => {
     setCount(count + FRAME);
 
@@ -28,11 +27,13 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
   }
 
   React.useEffect(() => {
-    if (count + FRAME < movies.length) {
+    if (count < movies.length) {
       setMoreFlag(true);
       setNonMovieMessage('')
+    } else {
+      setMoreFlag(false);
     }
-  }, [moreFlag, count, movies])
+  })
 
   return (
     <section className='card-list' >
@@ -48,11 +49,11 @@ function MoviesCardList({ movies, handleSave, isSave, width, LikeMovie, deleteMo
               handleSave={handleSave}
               key={movie.movieId}
               movie={movie}
-              favId={searchFavMovieId(movie.movieId)}
+              favId={searchFavMovieID(movie.movieId)}
             />
           ))}
         </div>)}
-      {moreFlag && (<button type='button' onClick={showMore} className={`card-list__button ${location.pathname === '/saved-movies' ? 'card-list__button_none' : ''}`}>Ещё</button>)}
+      {moreFlag && (<button type='button' onClick={showMore} className={`card-list__button`}>Ещё</button>)}
     </section>
   );
 }

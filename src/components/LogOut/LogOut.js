@@ -2,11 +2,12 @@ import React from 'react';
 import * as auth from '../../utils/Auth';
 import './logout.css'
 
-function LogOut({ cleanerSerch, setLogin,searchMovies }) {
+function LogOut({ cleanerSerch, setLogin, searchMovies }) {
 
   function handleExit() {
     auth.logout()
       .then((res) => {
+        console.log("logout")
         cleanerSerch()
         setLogin(false)
         localStorage.clear();

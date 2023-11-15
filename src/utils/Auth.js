@@ -1,5 +1,6 @@
-// export const BASE_URL = 'https://api.korolekdiplom.nomoredomainsicu.ru';
-export const BASE_URL = 'http://localhost:4000';
+import { API_SERVER_URL } from "./const";
+
+export const BASE_URL = API_SERVER_URL;
 
 export const register = (name, password, email) => {
     return fetch(`${BASE_URL}/signup`, {
@@ -53,15 +54,6 @@ export const login = (password, email) => {
             throw response
         })
 
-
-    // .then((data) => {
-    //     // сохраняем токен
-    //     if (data.token) {
-    //         localStorage.setItem('token', data.token);
-    //     }
-    //     return data
-    // })
-    // .catch((err) => console.log(err));
 };
 
 export const logout = () => {

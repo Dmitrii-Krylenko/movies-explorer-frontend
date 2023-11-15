@@ -1,19 +1,15 @@
 import React from 'react';
 import './searchForm.css'
 
-
 function SearchForm({ onSearch, searchQwery, setShort, isShort }) {
   const [searchMovies, setSearchMovies] = React.useState(searchQwery);
-
-
-
   function handleValueSubmit(e) {
     e.preventDefault();
-
-    onSearch(searchMovies, !isShort)
+    const form = e.target;
+    const searchInput = form.querySelector('input');
+    onSearch(searchInput.value)
   }
   const hendleShort = () => {
-    onSearch(searchMovies, !isShort)
     setShort(!isShort)
   }
 

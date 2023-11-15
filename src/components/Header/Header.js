@@ -21,7 +21,7 @@ function Header({ islogin, handleLogin }) {
         <img className="logo" onClick={goHome} src={Logo} alt="логотип" />
         <div className="header__button">
           <Link className='header__button-registry' to="/signup">Регистрация</Link>
-          <Link className='header__button-entry' to="/signin" onClick={handleLogin}>Войти</Link>
+          <Link className='header__button-entry' to="/signin" >Войти</Link>
 
         </div>
       </div>) : (<div className='header__block-login'>

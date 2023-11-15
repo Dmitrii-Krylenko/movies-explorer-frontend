@@ -1,4 +1,6 @@
 import { adapter } from "./Adapter"
+import { API_SERVER_URL } from "./const"
+
 class Api {
     constructor(options) {
         this._baseUrl = options.baseUrl
@@ -81,8 +83,7 @@ class Api {
 }
 
 const api = new Api({
-    // baseUrl: 'https://api.korolekdiplom.nomoredomainsicu.ru',
-    baseUrl: 'http://localhost:4000',
+    baseUrl: API_SERVER_URL,
     headers: {
         'Content-Type': 'application/json'
     }
