@@ -19,6 +19,12 @@
     margin: 0;
 }
 
+.portfolio__links {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+}
+
 .portfolio__link {
     font-size: 30px;
     font-weight: 400;
@@ -27,14 +33,15 @@
     color: #FFFFFF;
     list-style-type: none;
     text-decoration: none;
+    display: block;
+    margin: 0;
 }
 
 .portfolio__line {
-    display: flex;
-    justify-content: space-between;
     border-bottom: 1px solid #424242;
     padding-bottom: 19px;
     padding-top: 20px;
+    list-style-type: none;
 }
 
 .portfolio__line:last-of-type {

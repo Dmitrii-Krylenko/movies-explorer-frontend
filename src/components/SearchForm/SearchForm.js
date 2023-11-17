@@ -1,23 +1,37 @@
 import React from 'react';
 import './searchForm.css'
 
-function SearchForm() {
+function SearchForm({ onSearch, searchQwery, setShort, isShort }) {
+  const [searchMovies, setSearchMovies] = React.useState(searchQwery);
+  function handleValueSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const searchInput = form.querySelector('input');
+    onSearch(searchInput.value)
+  }
+  const hendleShort = () => {
+    setShort(!isShort)
+  }
+
+  const handleChange = (e) => {
+    setSearchMovies(e.target.value);
+  }
+
   return (
-    <div className='search'>
-      <div className='search__string'>
-        <input className='search__input' placeholder='Фильм'></input>
-        <button className='search__button'></button>
-      </div>
+    <section className='search'>
+      <form className='search__string' onSubmit={handleValueSubmit}>
+        <input className='search__input' minLength={1} maxLength={40} placeholder='Фильм' onChange={handleChange} value={searchMovies} ></input>
+        <button className='search__button' ></button>
+      </form>
       <div className='search__short-film'>
-        <label className='search__button-short' htmlFor='checkbox'>
-          <input className='search__button-short_input' type='checkbox' id='checkbox'></input>
-          <span className='search__button-short_span'>Короткометражки</span>
-        </label>
-        {/* <p className='search__button-short_text'>Короткометражки</p> */}
-        {/* <button className='search__short-film_button'></button> */}
-        {/* <p className='search__short-film_title'>Короткометражки</p> */}
+        <form>
+          <label className='search__button-short button-short' htmlFor='checkbox'>
+            <input className='button-short__input' type='checkbox' id='checkbox' onChange={hendleShort} checked={isShort}></input>
+            <span className='button-short__span'>Короткометражки</span>
+          </label>
+        </form>
       </div>
-    </div>
+    </section>
   );
 }
 

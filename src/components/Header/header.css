@@ -7,7 +7,7 @@
     background-color: #073042;
 }
 
-.header__logo {
+.logo {
     width: 38px;
     height: 38px;
     object-fit: cover;
@@ -34,7 +34,12 @@
     transition: 0.5s;
 }
 
-.header__button_registry {
+.header__button {
+    display: flex;
+    align-items: center;
+}
+
+.header__button-registry {
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
@@ -43,22 +48,27 @@
     color: #FFFFFF;
     background-color: #073042;
     border: none;
+    text-decoration: none;
+    display: block;
 }
 
-.header__button_entry {
+.header__button-entry {
+    text-decoration: none;
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
     letter-spacing: 0px;
     padding: 0;
+    color: rgba(0, 0, 0, 1);
     background-color: #3DDC84;
-    width: 76px;
-    height: 32px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     margin-left: 30px;
     font-family: Inter;
+    display: block;
+    text-align: center;
+    padding: 8px 20px;
 }
 
 .header__block {
@@ -69,7 +79,7 @@
     flex-wrap: wrap;
 }
 
-.header__block_login {
+.header__block-login {
     display: flex;
     justify-content: space-between;
     height: 74px;
@@ -77,7 +87,7 @@
     flex-wrap: wrap;
 }
 
-.header__button_link {
+.button-film__link {
     font-size: 13px;
     font-weight: 500;
     line-height: 18px;
@@ -86,19 +96,19 @@
     text-decoration: none;
 }
 
-.header__button_link:hover {
+.button-film__link:hover {
     opacity: 0.6;
     transition: 0.5s;
 }
 
-.header__button_film {
+.header__button-film {
     display: flex;
     width: 212px;
     justify-content: space-between;
     align-items: center;
 }
 
-.header__button_image {
+.button-profile__image {
     width: 26px;
     height: 26px;
     border-radius: 50px;
@@ -109,18 +119,18 @@
     margin-left: 7px;
 }
 
-.header__button_image_blue {
+.button-profile__image_blue {
     background-color: #0F4157;
 }
 
-.header__button_profile {
+.header__button-profile {
     display: flex;
     width: 212px;
     justify-content: flex-end;
     align-items: center
 }
 
-.header__logo_bpx {
+.logo-bpx {
     width: 212px;
 }
 
@@ -131,10 +141,7 @@
         padding-right: 30px;
     }
 
-    .header__button_entry {
-        width: 76px;
-        height: 32px;
-    }
+    .header__button-entry {}
 
     .header__burger {
         display: block;
@@ -144,7 +151,7 @@
         display: none;
     }
 
-    .header__button_profile {
+    .header__button-profile {
         display: none;
     }
 }
@@ -156,14 +163,13 @@
         padding-right: 14px;
     }
 
-    .header__button_entry {
+    .header__button-entry {
         font-size: 10px;
-        width: 54px;
-        height: 26px;
+        padding: 5px 12px;
         margin-left: 14px;
     }
 
-    .header__button_registry {
+    .header__button-registry {
         font-size: 10px;
     }
 }
