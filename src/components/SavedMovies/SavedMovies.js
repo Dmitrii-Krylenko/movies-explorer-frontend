@@ -17,9 +17,9 @@ function SavedMovies({
   width,
   setSearchMoviesSaved
 }) {
-  const [sq, setSq] = React.useState('');
+  const [saveSerhQwery, setSaveserchQwery] = React.useState('');
 
-  const onSq = (searchQuery)=>{
+  const onSaveSerch = (searchQuery)=>{
     onSearch(searchQuery);
   }
 
@@ -30,7 +30,7 @@ function SavedMovies({
   React.useEffect(() => {
     setShort(false)
     setSearchMoviesSaved('')
-    setSq('')
+    setSaveserchQwery('')
   }, [])
 
   return (
@@ -39,8 +39,8 @@ function SavedMovies({
         <SearchForm
           setShort={setShort}
           isShort={isShort}
-          onSearch={onSq}
-          searchQwery={sq}
+          onSearch={onSaveSerch}
+          searchQwery={saveSerhQwery}
         />
         <MoviesCardList
           width={width}

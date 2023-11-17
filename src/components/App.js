@@ -129,11 +129,7 @@ function App() {
   };
 
   React.useEffect(() => {
-    console.log('search useEffect');
     getMovies(searchMovies, isShort);
-    // window.localStorage.setItem("short", isShort);
-    // window.localStorage.setItem("beforeSearch", searchMovies);
-
   }, [searchMovies, isShort])
 
   function getMovies(searchQuery, short = false) {
@@ -147,18 +143,13 @@ function App() {
     });
     const filterShortMovies = shortMetrMovies(filterMovies, short);
     setMovies(filterShortMovies);
-    console.log('movies v getmovies', movies.length)
-    console.log('getMov', 'short', short, 'serch', searchQuery )
-  
   }
 
   React.useEffect(() => {
-    console.log('useEffect', 'short', isShort, 'serch', searchMovies )
-
-    if(isShort || searchMovies){
+    if (isShort || searchMovies) {
       if (movies.length === 0) {
         if (location.pathname === '/movies')
-        setNonMovieMessage('По вашему запросу ничего не найдено.')
+          setNonMovieMessage('По вашему запросу ничего не найдено.')
       }
     }
   }, [movies])
@@ -191,13 +182,10 @@ function App() {
 
 
   React.useEffect(() => {
-    console.log('useEffect', 'isShortSaved---', isShortSaved, 'searchMoviesSaved', searchMoviesSaved )
-    console.log('длинна на сохраеннии', likeMovies.length)
-
-    if(isShortSaved || searchMoviesSaved){
+    if (isShortSaved || searchMoviesSaved) {
       if (likeMovies.length === 0) {
         if (location.pathname === '/saved-movies')
-        setNonMovieMessage('По вашему запросу ничего не найдено.')
+          setNonMovieMessage('По вашему запросу ничего не найдено.')
       }
     }
   }, [likeMovies])
@@ -220,8 +208,6 @@ function App() {
       .then(() => {
         setLikeMovies(likeMovies.filter((item) => item.movieId !== movie.movieId))
         removeFavMoveID(movie.movieId);
-        // TODO: check search
-
         if (likeMovies.length === 1) {
           if (location.pathname === '/saved-movies')
             setNonMovieMessage('По вашему запросу ничего не найдено.')
@@ -296,18 +282,13 @@ function App() {
   };
 
   const onSearch = (value) => {
-    // getMovies(value, isShort);
-    console.log('onSearch', value)
     setSearchMovies(value);
-    // window.localStorage.setItem("short", isShort);
     window.localStorage.setItem("beforeSearch", value);
-    console.log('длинна всех ', movies.length)
- 
+
   };
 
   const onSearchSaved = (value) => {
     savedMovies(value, isShortSaved);
-    console.log('длинна сохраненных', likeMovies.length)
     setSearchMoviesSaved(value);
   };
 
