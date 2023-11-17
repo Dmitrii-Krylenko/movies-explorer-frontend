@@ -39,8 +39,7 @@ function App() {
   const [islogin, setLogin] = React.useState(false);
   const [isSave, setSave] = React.useState(true);
 
-  const beforeSearch = window.localStorage.getItem("beforeSearch") || "";
-  const [searchMovies, setSearchMovies] = React.useState(beforeSearch);
+  const [searchMovies, setSearchMovies] = React.useState('');
   const [isShort, setShort] = React.useState(
     localStorage.getItem("short") === "true"
   );
@@ -58,14 +57,15 @@ function App() {
       .then((rawBeatfilmMovies) => {
         const adaptMovies = rawBeatfilmMovies.map(adapter);
         setBeatfilmMovies(adaptMovies);
-        console.log("islogin", islogin)
         if (islogin) {
-          checkToken().then(() => {
+          return checkToken().then(() => {
             api.getMovies().then((m) => {
               setFavMovieId(favMovieID(m, "movieId"));
               setLikeMovies(m);
             });
           });
+        } else {
+          Promise.resolve();
         }
       })
       .finally(() => {
@@ -81,12 +81,21 @@ function App() {
   }, [islogin]); // first load
 
   React.useEffect(() => {
-    console.log('useeff', searchMovies, isShort)
     if (searchMovies || isShort) {
       getMovies(searchMovies, isShort)
     }
+    const beforeSearch = window.localStorage.getItem("beforeSearch") || "";
+    setSearchMovies(beforeSearch)
   }, [beatfilmMovies])
 
+  function handleIsShort(short) {
+    setShort(short)
+    window.localStorage.setItem("short", short);
+  }
+
+  function handleIsSaveShort(short) {
+    setShortSaved(short)
+  }
 
   const shortMetrMovies = (movies, short) => {
     if (short) {
@@ -120,14 +129,12 @@ function App() {
   };
 
   React.useEffect(() => {
+    console.log('search useEffect');
     getMovies(searchMovies, isShort);
-    window.localStorage.setItem("short", isShort);
-    window.localStorage.setItem("beforeSearch", searchMovies);
-  }, [searchMovies, isShort])
+    // window.localStorage.setItem("short", isShort);
+    // window.localStorage.setItem("beforeSearch", searchMovies);
 
-  React.useEffect(() => {
-    savedMovies(searchMoviesSaved, isShortSaved);
-  }, [searchMoviesSaved, isShortSaved])
+  }, [searchMovies, isShort])
 
   function getMovies(searchQuery, short = false) {
 
@@ -138,18 +145,40 @@ function App() {
         item.nameEN.toLowerCase().includes(lowerSerch)
       );
     });
-    const filterShortMovies = shortMetrMovies(filterMovies, isShort);
+    const filterShortMovies = shortMetrMovies(filterMovies, short);
     setMovies(filterShortMovies);
+    console.log('movies v getmovies', movies.length)
+    console.log('getMov', 'short', short, 'serch', searchQuery )
+  
   }
+
+  React.useEffect(() => {
+    console.log('useEffect', 'short', isShort, 'serch', searchMovies )
+
+    if(isShort || searchMovies){
+      if (movies.length === 0) {
+        if (location.pathname === '/movies')
+        setNonMovieMessage('По вашему запросу ничего не найдено.')
+      }
+    }
+  }, [movies])
+
+
+
+  React.useEffect(() => {
+    savedMovies(searchMoviesSaved, isShortSaved);
+  }, [searchMoviesSaved, isShortSaved])
+
+
 
   function savedMovies(searchQuery, short = false) {
     if (Object.keys(favMovieId).length === 0) return
-    const likeMovies = beatfilmMovies.filter((movie) => {
+    const savedFavMovies = beatfilmMovies.filter((movie) => {
       return searchFavMovieID(movie.movieId);
     });
 
     const lowerSerch = searchQuery.toLowerCase();
-    const filterMovies = likeMovies.filter((item) => {
+    const filterMovies = savedFavMovies.filter((item) => {
       return (
         item.nameRU.toLowerCase().includes(lowerSerch) ||
         item.nameEN.toLowerCase().includes(lowerSerch)
@@ -158,10 +187,20 @@ function App() {
 
     const filterShortMovies = shortMetrMovies(filterMovies, short);
     setLikeMovies(filterShortMovies);
-    if (filterShortMovies.length === 0) {
-      setNonMovieMessage('По вашему запросу ничего не найдено.')
-    }
   }
+
+
+  React.useEffect(() => {
+    console.log('useEffect', 'isShortSaved---', isShortSaved, 'searchMoviesSaved', searchMoviesSaved )
+    console.log('длинна на сохраеннии', likeMovies.length)
+
+    if(isShortSaved || searchMoviesSaved){
+      if (likeMovies.length === 0) {
+        if (location.pathname === '/saved-movies')
+        setNonMovieMessage('По вашему запросу ничего не найдено.')
+      }
+    }
+  }, [likeMovies])
 
   function handleLikeMovie(movie) {
     return api
@@ -175,17 +214,14 @@ function App() {
   }
 
   function handleDeleteMovie(movie) {
-    console.log('est', movie)
-
     const _id = searchFavMovieID(movie.movieId);
-    console.log(_id);
     return api
       .deleteMovies(_id)
       .then(() => {
         setLikeMovies(likeMovies.filter((item) => item.movieId !== movie.movieId))
         removeFavMoveID(movie.movieId);
-        console.log('udolil', likeMovies.length)
-        console.log(likeMovies)
+        // TODO: check search
+
         if (likeMovies.length === 1) {
           if (location.pathname === '/saved-movies')
             setNonMovieMessage('По вашему запросу ничего не найдено.')
@@ -260,16 +296,19 @@ function App() {
   };
 
   const onSearch = (value) => {
-    getMovies(value, isShort);
+    // getMovies(value, isShort);
+    console.log('onSearch', value)
     setSearchMovies(value);
+    // window.localStorage.setItem("short", isShort);
     window.localStorage.setItem("beforeSearch", value);
-    if (movies.length === 0) {
-      setNonMovieMessage('По вашему запросу ничего не найдено.')
-    }
+    console.log('длинна всех ', movies.length)
+ 
   };
 
   const onSearchSaved = (value) => {
     savedMovies(value, isShortSaved);
+    console.log('длинна сохраненных', likeMovies.length)
+    setSearchMoviesSaved(value);
   };
 
   const handleLogin = () => {
@@ -279,6 +318,7 @@ function App() {
   const handleSave = () => {
     setSave(!isSave);
   };
+
   React.useEffect(
     () => {
       checkToken();
@@ -328,7 +368,7 @@ function App() {
                           setNonMovieMessage={setNonMovieMessage}
                           savedMovies={savedMovies}
                           getMovies={getMovies}
-                          setShort={setShort}
+                          setShort={handleIsShort}
                           isShort={isShort}
                           isLoading={isLoading}
                           deleteMovie={handleDeleteMovie}
@@ -359,7 +399,7 @@ function App() {
                           setNonMovieMessage={setNonMovieMessage}
                           savedMovies={savedMovies}
                           getMovies={getMovies}
-                          setShort={setShortSaved}
+                          setShort={handleIsSaveShort}
                           isShort={isShortSaved}
                           setSearchMoviesSaved={setSearchMoviesSaved}
                           searchQwery={searchMoviesSaved}
